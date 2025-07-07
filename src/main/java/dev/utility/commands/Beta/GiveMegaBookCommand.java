@@ -1,4 +1,4 @@
-package dev.utility.commands;
+package dev.utility.commands.Beta;
 
 import dev.utility.listeners.MegaPickaxeListener;
 import org.bukkit.command.Command;

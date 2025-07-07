@@ -1,4 +1,4 @@
-package dev.utility.commands;
+package dev.utility.commands.Moderation;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -37,3 +37,18 @@ commands:
   givemegabook:
     description: Gives the MegaPickaxe book(Beta)
     usage: /givemegabook
+  clearchat:
+    description: Clears the chat for all players
+    permission: utility.clearchat
+  announce:
+    description: Broadcasts an important announcement to the server
+    usage: /announce <message>
+    permission: utility.announce
+    tp:
+    description: Teleport to another player
+    usage: /tp <player>
+    permission: utility.tp
+  tphere:
+    description: Teleport a player to you
+    usage: /tphere <player>
+    permission: utility.tphere

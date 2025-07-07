@@ -6,7 +6,19 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.plugin.PluginManager;
 
-import dev.utility.commands.*;
+import dev.utility.commands.Beta.GiveMegaBookCommand;
+import dev.utility.commands.Moderation.FlyCommand;
+import dev.utility.commands.Moderation.GamemodeCommand;
+import dev.utility.commands.Moderation.GodCommand;
+import dev.utility.commands.Moderation.PermsGiveCommand;
+import dev.utility.commands.Moderation.AnnouncementCommand;
+import dev.utility.commands.Moderation.TphereCommand;
+import dev.utility.commands.Moderation.TpCommand;
+import dev.utility.commands.Moderation.ClearChatCommand;
+import dev.utility.commands.Utility.FeedCommand;
+import dev.utility.commands.Utility.HealCommand;
+import dev.utility.commands.Utility.HelpCommand;
+import dev.utility.commands.Utility.NightVisionCommand;
 import dev.utility.listeners.*;
 
 import java.lang.reflect.Field;
@@ -29,9 +41,7 @@ public class Utility extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(" - " + cmd);
         }
         Bukkit.getConsoleSender().sendMessage("§a[Utility] Registered listeners:");
-        Bukkit.getConsoleSender().sendMessage(" - TreeMinerListener");
-        Bukkit.getConsoleSender().sendMessage(" - SaplingGrowListener");
-        Bukkit.getConsoleSender().sendMessage(" - MegaPickaxeListener");
+        Bukkit.getConsoleSender().sendMessage(" - Loaded 5 Listeners");
     }
 
     private void registerCommands() {
@@ -41,9 +51,13 @@ public class Utility extends JavaPlugin {
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("feed").setExecutor(new FeedCommand());
         getCommand("god").setExecutor(new GodCommand(this));
+        getCommand("clearchat").setExecutor(new ClearChatCommand());
         getCommand("permsgive").setExecutor(new PermsGiveCommand(this));
         getCommand("help").setExecutor(new HelpCommand());
         getCommand("givemegabook").setExecutor(new GiveMegaBookCommand());
+        getCommand("announce").setExecutor(new AnnouncementCommand());
+        getCommand("tp").setExecutor(new TpCommand());
+        getCommand("tphere").setExecutor(new TphereCommand());
     }
 
     private void registerListeners() {
@@ -51,6 +65,8 @@ public class Utility extends JavaPlugin {
         pm.registerEvents(new TreeMinerListener(), this);
         pm.registerEvents(new SaplingGrowListener(this), this);
         pm.registerEvents(new MegaPickaxeListener(), this);
+        pm.registerEvents(new PhantomBlockerListener(), this);
+        pm.registerEvents(new DamageIndicatorListener(this), this);
     }
 
     private void unregisterDefaultHelpCommand() {
@@ -68,9 +84,7 @@ public class Utility extends JavaPlugin {
             knownCommands.remove("help");
             knownCommands.remove("bukkit:help");
             knownCommands.remove("minecraft:help");
-        } catch (Exception e) {
-            getLogger().warning("Failed to unregister default /help command: " + e.getMessage());
-        }
+        } catch (Exception e) {}
     }
 
     public static Utility getInstance() {

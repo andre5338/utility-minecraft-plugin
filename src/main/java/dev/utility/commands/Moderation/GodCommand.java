@@ -1,4 +1,4 @@
-package dev.utility.commands;
+package dev.utility.commands.Moderation;
 
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
