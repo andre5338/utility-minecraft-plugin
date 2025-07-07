@@ -1,0 +1,39 @@
+name: utility
+version: 1.0
+main: dev.utility.Utility
+api-version: 1.20
+commands:
+  fly:
+    description: Toggle fly mode
+    usage: /fly
+    permission: utility.fly
+  nightvision:
+    description: Toggle night vision effect
+    usage: /nightvision
+    permission: utility.nightvision
+  gm:
+    description: Change your gamemode
+    usage: /gm <0|1|2|3>
+    permission: utility.gamemode
+  heal:
+    description: Heal yourself to full health
+    usage: /heal
+    permission: utility.heal
+  feed:
+    description: Feed yourself
+    usage: /feed
+    permission: utility.feed
+  god:
+    description: Toggle god mode (invulnerability)
+    usage: /god
+    permission: utility.god
+  permsgive:
+    description: Give a permission to a player
+    usage: /permsgive <player> <permission>
+    permission: utility.perms.give
+  help:
+    description: Shows a list of commands
+    usage: /help
+  givemegabook:
+    description: Gives the MegaPickaxe book(Beta)
+    usage: /givemegabook
