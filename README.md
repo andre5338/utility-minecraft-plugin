@@ -19,7 +19,7 @@ A powerful Minecraft Spigot plugin offering convenient features like fly mode, g
 
 1. Compile the plugin using Maven:
    `mvn clean package`
-1.1 Or Install [The Plugin]()
+1.1 Or Install [The Plugin](https://www.spigotmc.org/resources/utility.126757/)
 
 3. Place the generated `.jar` file into your server's `plugins/` folder
 
