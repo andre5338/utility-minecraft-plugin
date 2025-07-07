@@ -44,7 +44,7 @@ commands:
     description: Broadcasts an important announcement to the server
     usage: /announce <message>
     permission: utility.announce
-    tp:
+  tp:
     description: Teleport to another player
     usage: /tp <player>
     permission: utility.tp
