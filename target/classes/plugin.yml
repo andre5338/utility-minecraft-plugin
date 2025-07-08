@@ -1,54 +1,51 @@
-name: utility
+name: system
 version: 1.0
-main: dev.utility.Utility
+main: dev.system.system
 api-version: 1.20
 commands:
   fly:
     description: Toggle fly mode
     usage: /fly
-    permission: utility.fly
+    permission: system.fly
   nightvision:
     description: Toggle night vision effect
     usage: /nightvision
-    permission: utility.nightvision
+    permission: system.nightvision
   gm:
     description: Change your gamemode
     usage: /gm <0|1|2|3>
-    permission: utility.gamemode
+    permission: system.gamemode
   heal:
     description: Heal yourself to full health
     usage: /heal
-    permission: utility.heal
+    permission: system.heal
   feed:
     description: Feed yourself
     usage: /feed
-    permission: utility.feed
+    permission: system.feed
   god:
     description: Toggle god mode (invulnerability)
     usage: /god
-    permission: utility.god
+    permission: system.god
   permsgive:
     description: Give a permission to a player
     usage: /permsgive <player> <permission>
-    permission: utility.perms.give
+    permission: system.perms.give
   help:
     description: Shows a list of commands
     usage: /help
-  givemegabook:
-    description: Gives the MegaPickaxe book(Beta)
-    usage: /givemegabook
   clearchat:
     description: Clears the chat for all players
-    permission: utility.clearchat
+    permission: system.clearchat
   announce:
     description: Broadcasts an important announcement to the server
     usage: /announce <message>
-    permission: utility.announce
+    permission: system.announce
   tp:
     description: Teleport to another player
     usage: /tp <player>
-    permission: utility.tp
+    permission: system.tp
   tphere:
     description: Teleport a player to you
     usage: /tphere <player>
-    permission: utility.tphere
+    permission: system.tphere
