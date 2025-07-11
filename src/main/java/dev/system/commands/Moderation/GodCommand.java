@@ -1,5 +1,6 @@
 package dev.system.commands.Moderation;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
@@ -14,32 +15,59 @@ public class GodCommand implements CommandExecutor, Listener {
 
     private final Set<UUID> godmodePlayers = new HashSet<>();
     private final JavaPlugin plugin;
+    private static final String PREFIX = "§2System | ";
 
     public GodCommand(JavaPlugin plugin) {
         this.plugin = plugin;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§2System | §cOnly players can use this command.");
+            sender.sendMessage(PREFIX + "§cOnly players can use this command.");
             return true;
         }
+
         Player p = (Player) sender;
-        if (!p.hasPermission("system.god")) {
-            p.sendMessage("§2System | §cYou don’t have permission to use this command.");
+
+        if (args.length == 0) {
+            if (!p.hasPermission("system")) {
+                p.sendMessage(PREFIX + "§cYou don’t have permission to use this command.");
+                return true;
+            }
+
+            toggleGod(p, p);
             return true;
         }
-        UUID uuid = p.getUniqueId();
+
+        if (!p.hasPermission("system.god")) {
+            p.sendMessage(PREFIX + "§cYou don’t have permission to change god mode for others.");
+            return true;
+        }
+
+        Player target = Bukkit.getPlayerExact(args[0]);
+        if (target == null) {
+            p.sendMessage(PREFIX + "§cPlayer not found.");
+            return true;
+        }
+
+        toggleGod(p, target);
+        return true;
+    }
+
+    private void toggleGod(Player sender, Player target) {
+        UUID uuid = target.getUniqueId();
         if (godmodePlayers.contains(uuid)) {
             godmodePlayers.remove(uuid);
-            p.sendMessage("§2System | §cGod mode disabled");
+            target.sendMessage(PREFIX + "§cGod mode disabled.");
+            if (!sender.equals(target))
+                sender.sendMessage(PREFIX + "§cGod mode disabled for " + target.getName() + ".");
         } else {
             godmodePlayers.add(uuid);
-            p.sendMessage("§2System | §aGod mode enabled");
+            target.sendMessage(PREFIX + "§aGod mode enabled.");
+            if (!sender.equals(target))
+                sender.sendMessage(PREFIX + "§aGod mode enabled for " + target.getName() + ".");
         }
-        return true;
     }
 
     @EventHandler

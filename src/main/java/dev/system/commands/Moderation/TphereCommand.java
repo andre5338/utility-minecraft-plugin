@@ -28,6 +28,7 @@ public class TphereCommand implements CommandExecutor {
             return true;
         }
         target.teleport(p.getLocation());
+        target.sendMessage(PREFIX + "§aYou got teleported by " + p.getName());
         p.sendMessage(PREFIX + "§aTeleported " + target.getName() + " to you.");
         return true;
     }

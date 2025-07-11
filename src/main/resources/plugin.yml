@@ -1,5 +1,5 @@
 name: system
-version: 1.0
+version: 0.4.0
 main: dev.system.system
 api-version: 1.20
 commands:
@@ -34,8 +34,10 @@ commands:
   help:
     description: Shows a list of commands
     usage: /help
+    permission: default
   clearchat:
     description: Clears the chat for all players
+    usage: /clearchat
     permission: system.clearchat
   announce:
     description: Broadcasts an important announcement to the server
@@ -49,3 +51,36 @@ commands:
     description: Teleport a player to you
     usage: /tphere <player>
     permission: system.tphere
+  ec:
+    description: Open your EnderChest
+    usage: /ec
+    permission: system.ec
+  craft:
+    description: Open your Crafting Table
+    usage: /craft
+    permission: system.craft
+  vanish:
+    description: Go in Vanish
+    usage: /vanish
+    permission: system.vanish
+  enchant:
+    description: Apply enchantment to item
+    usage: /enchant <Enchantment> <Level>
+    permission: system.enchant
+  tpa:
+    description: Request to teleport to a player
+    usage: /tpa <player>
+    permission: system.tpa
+  tpahere:
+    description: Request a player to teleport to you
+    usage: /tpahere <player>
+    permission: system.tpahere
+  tpaccept:
+    description: Accept a teleport request
+    usage: /tpaccept
+  tpdeny:
+    description: Deny a teleport request
+    usage: /tpdeny
+  tptoggle:
+    description: Toggle the TP Requests
+    usage: /tptoggle

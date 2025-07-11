@@ -4,8 +4,8 @@ A powerful Minecraft Spigot plugin offering convenient features like fly mode, g
 
 ## Features
 
-- Moderation commands such as clearchat etc,
-- Utility commands such as /feed, /heal etc.
+- Moderation commands such as clearchat, vanish etc,
+- Utility commands such as /feed, /heal, /ec etc.
 - Tree Miner - Automatically cuts down full trees
 - Fast-Growing Saplings - Saplings grow into trees within 5 seconds
 

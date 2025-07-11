@@ -4,27 +4,47 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Map;
 
 public class HelpCommand implements CommandExecutor {
 
+    private final JavaPlugin plugin;
+
+    public HelpCommand(JavaPlugin plugin) {
+        this.plugin = plugin;
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player player)) {
+
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§2System | §cOnly players can use this command.");
             return true;
         }
 
-        player.sendMessage("§8§m----------------------------------");
-        player.sendMessage("§2System | §aUtility Plugin Commands:");
-        player.sendMessage("§a/fly §7– Toggle fly mode");
-        player.sendMessage("§a/nightvision §7– Toggle night vision");
-        player.sendMessage("§a/gm <0|1|2|3> §7– Change your gamemode");
-        player.sendMessage("§a/heal §7– Heal yourself");
-        player.sendMessage("§a/feed §7– Feed yourself");
-        player.sendMessage("§a/god §7– Toggle god mode");
-        player.sendMessage("§a/permsgive <player> <permission> §7– Give permission to a player");
-        player.sendMessage("§8§m----------------------------------");
-        player.sendMessage("§2System | §eSupport: §bhttps://discord.gg/zQRYbaXgNa");
+        Map<String, Map<String, Object>> commands = plugin.getDescription().getCommands();
+
+        p.sendMessage("§8§m----------------------------------");
+        p.sendMessage("§2System | Commands:");
+
+        for (Map.Entry<String, Map<String, Object>> entry : commands.entrySet()) {
+            String cmdName = entry.getKey();
+            Map<String, Object> info = entry.getValue();
+
+            String description = info.getOrDefault("description", "").toString();
+            String usage = info.getOrDefault("usage", "/" + cmdName).toString();
+
+            String permission = info.getOrDefault("permission", "").toString();
+            if (!permission.isEmpty() && !p.hasPermission(permission)) continue;
+
+            p.sendMessage("§a" + usage + " §7- " + description);
+        }
+
+        p.sendMessage("§8§m----------------------------------");
+        p.sendMessage("§2System | §eSupport: §bhttps://discord.gg/zQRYbaXgNa");
+
         return true;
     }
 }

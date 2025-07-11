@@ -1,28 +1,20 @@
 package dev.system;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.command.PluginCommand;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import dev.system.commands.Moderation.FlyCommand;
-import dev.system.commands.Moderation.GamemodeCommand;
-import dev.system.commands.Moderation.GodCommand;
-import dev.system.commands.Moderation.PermsGiveCommand;
-import dev.system.commands.Moderation.AnnouncementCommand;
-import dev.system.commands.Moderation.TphereCommand;
-import dev.system.commands.Moderation.TpCommand;
-import dev.system.commands.Moderation.ClearChatCommand;
-import dev.system.commands.Utility.FeedCommand;
-import dev.system.commands.Utility.HealCommand;
-import dev.system.commands.Utility.HelpCommand;
-import dev.system.commands.Utility.NightVisionCommand;
+import dev.system.commands.Moderation.*;
+import dev.system.commands.Utility.*;
 import dev.system.listeners.*;
 import dev.system.tasks.AutoClearTask;
-
-import java.lang.reflect.Field;
-import java.util.Map;
 
 public class system extends JavaPlugin {
 
@@ -39,27 +31,49 @@ public class system extends JavaPlugin {
 
         new AutoClearTask(this).start();
 
-        Bukkit.getConsoleSender().sendMessage("§a[system] - Plugin loaded successfully.");
-        Bukkit.getConsoleSender().sendMessage("§a[system] - Registered " + registeredCommands + " commands:");
-        Bukkit.getConsoleSender().sendMessage("§a[system] - Listeners loaded successfully.");
-        Bukkit.getConsoleSender().sendMessage("§a[system] - Registered " + registeredListeners + " listeners.");
+        Bukkit.getConsoleSender().sendMessage("§a[System] - Plugin loaded successfully.");
+        Bukkit.getConsoleSender().sendMessage("§a[System] - Registered " + registeredCommands + " commands:");
+        Bukkit.getConsoleSender().sendMessage("§a[System] - Listeners loaded successfully.");
+        Bukkit.getConsoleSender().sendMessage("§a[System] - Registered " + registeredListeners + " listeners.");
     }
 
     private void registerCommands() {
-        getCommand("fly").setExecutor(new FlyCommand());
-        getCommand("nightvision").setExecutor(new NightVisionCommand());
-        getCommand("gm").setExecutor(new GamemodeCommand());
-        getCommand("heal").setExecutor(new HealCommand());
-        getCommand("feed").setExecutor(new FeedCommand());
-        getCommand("god").setExecutor(new GodCommand(this));
-        getCommand("clearchat").setExecutor(new ClearChatCommand());
-        getCommand("permsgive").setExecutor(new PermsGiveCommand(this));
-        getCommand("help").setExecutor(new HelpCommand());
-        getCommand("announce").setExecutor(new AnnouncementCommand());
-        getCommand("tp").setExecutor(new TpCommand());
-        getCommand("tphere").setExecutor(new TphereCommand());
+        registeredCommands = 0;
 
-        registeredCommands = 13;
+        register("fly", new FlyCommand());
+        register("nightvision", new NightVisionCommand());
+        register("gm", new GamemodeCommand());
+        register("heal", new HealCommand());
+        register("feed", new FeedCommand());
+        register("god", new GodCommand(this));
+        register("clearchat", new ClearChatCommand());
+        register("permsgive", new PermsGiveCommand(this));
+        register("help", new HelpCommand(this));
+        register("announce", new AnnouncementCommand());
+        register("tp", new TpCommand());
+        register("tphere", new TphereCommand());
+        register("ec", new EnderChestCommand());
+        register("craft", new CraftCommand());
+        register("vanish", new VanishCommand(this));
+        register("enchant", new EnchantCommand());
+        register("tpa", new TpaCommand());
+        register("tpahere", new TpahereCommand());
+        register("tpaccept", new TpacceptCommand());
+        register("tpdeny", new TpdenyCommand());
+        register("tptoggle", new TptoggleCommand());
+    }
+
+    private void register(String name, Object executor) {
+        PluginCommand cmd = getCommand(name);
+        if (cmd != null) {
+            if (executor instanceof org.bukkit.command.CommandExecutor ce)
+                cmd.setExecutor(ce);
+            if (executor instanceof TabCompleter completer)
+                cmd.setTabCompleter(completer);
+            registeredCommands++;
+        } else {
+            Bukkit.getLogger().warning("Command /" + name + " not found in plugin.yml!");
+        }
     }
 
     private void registerListeners() {
@@ -92,7 +106,7 @@ public class system extends JavaPlugin {
             knownCommands.remove("help");
             knownCommands.remove("bukkit:help");
             knownCommands.remove("minecraft:help");
-        } catch (Exception e) {}
+        } catch (Exception ignored) {}
     }
 
     public static system getInstance() {
